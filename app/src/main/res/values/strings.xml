@@ -26,5 +26,7 @@
     <string name="article_category">Article Category</string>
     <string name="article_description">Article Description</string>
     <string name="article_title">Article Title</string>
+    <string name="articles">Articles</string>
+    <string name="category">Category</string>
 
 </resources>

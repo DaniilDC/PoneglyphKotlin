@@ -60,9 +60,9 @@ class PdfAddActivity : AppCompatActivity() {
     private var category = ""
     private fun validateData() {
         Log.d(TAG, "validateData: validating data")
-        title = binding.titleEt.toString().trim()
-        description = binding.descriptionEt.toString().trim()
-        category = binding.categoryTv.toString().trim()
+        title = binding.titleEt.text.toString().trim()
+        description = binding.descriptionEt.text.toString().trim()
+        category = binding.categoryTv.text.toString().trim()
 
         if (title.isEmpty()) {
             Toast.makeText(this, "Enter Title..", Toast.LENGTH_SHORT).show()
@@ -113,7 +113,7 @@ class PdfAddActivity : AppCompatActivity() {
         val hashMap: HashMap<String, Any> = HashMap()
         hashMap["uid"] = "$uid"
         hashMap["id"] = "$timestamp"
-        hashMap["title"] = title
+        hashMap["title"] = "$title"
         hashMap["description"] = description
         hashMap["categoryId"] = "$selectedCategoryId"
         hashMap["categoryTitle"] = "$selectedCategoryTitle"
