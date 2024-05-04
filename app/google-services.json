@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "212075051187",
+    "project_id": "poneglyph-kotlin",
+    "storage_bucket": "poneglyph-kotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212075051187:android:dd0eb547ecea114ff8d8c6",
+        "android_client_info": {
+          "package_name": "com.technifysoft.poneglyph"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOUXuVPhp3HQ62IbDeqwcrYMi3N7i_pLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
