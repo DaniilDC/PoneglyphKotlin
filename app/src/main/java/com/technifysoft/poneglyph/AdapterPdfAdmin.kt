@@ -1,6 +1,8 @@
 package com.technifysoft.poneglyph
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +17,7 @@ class AdapterPdfAdmin : RecyclerView.Adapter<AdapterPdfAdmin.HolderPdfAdmin>, Fi
     public var pdfArrayList: ArrayList<ModelPdf>
     private val filterList: ArrayList<ModelPdf>
 
-    var filter: FilterPdfAdmin? = null
+    private var filter: FilterPdfAdmin? = null
 
     private lateinit var binding: RowPdfAdminBinding
 
@@ -55,6 +57,31 @@ class AdapterPdfAdmin : RecyclerView.Adapter<AdapterPdfAdmin.HolderPdfAdmin>, Fi
             null
         )
         MyApplication.loadPdfSize(pdfUrl, title, holder.sizeTv)
+
+        holder.moreBtn.setOnClickListener {
+            moreOptionsDialog(model, holder)
+        }
+    }
+
+    private fun moreOptionsDialog(model: ModelPdf, holder: AdapterPdfAdmin.HolderPdfAdmin) {
+        val articleId = model.id
+        val articleUrl = model.url
+        val articleTitle = model.title
+
+        val options = arrayOf("Edit", "Delete")
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Choose Option")
+            .setItems(options) { dialog, position ->
+                if (position == 0) {
+                    val intent = Intent(context, PdfEditActivity::class.java)
+                    intent.putExtra("articleId", articleId)
+                    context.startActivity(intent)
+                }
+                else if (position == 1) {
+                    MyApplication.deleteArticle(context, articleId, articleUrl, articleTitle)
+                }
+            }
+            .show()
     }
 
     override fun getItemCount(): Int {
@@ -65,7 +92,7 @@ class AdapterPdfAdmin : RecyclerView.Adapter<AdapterPdfAdmin.HolderPdfAdmin>, Fi
         if (filter == null) {
             filter = FilterPdfAdmin(filterList, this)
         }
-        return  filter as FilterPdfAdmin
+        return filter as FilterPdfAdmin
     }
 
     inner class HolderPdfAdmin(itemView: View) : RecyclerView.ViewHolder(itemView) {

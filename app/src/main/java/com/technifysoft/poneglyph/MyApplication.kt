@@ -1,11 +1,14 @@
 package com.technifysoft.poneglyph
 
 import android.app.Application
+import android.app.ProgressDialog
+import android.content.Context
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import com.github.barteksc.pdfviewer.PDFView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -107,6 +110,57 @@ class MyApplication : Application() {
                     override fun onCancelled(error: DatabaseError) {
                     }
                 })
+        }
+
+        fun deleteArticle(
+            context: Context,
+            articleId: String,
+            articleUrl: String,
+            articleTitle: String
+        ) {
+            val TAG = "DELETE_ARTICLE_TAG"
+            Log.d(TAG, "deleteArticle: deleting article..")
+            val progressDialog = ProgressDialog(context)
+            progressDialog.setTitle("Please wait")
+            progressDialog.setMessage("Deleting $articleTitle..")
+            progressDialog.setCanceledOnTouchOutside(false)
+            progressDialog.show()
+
+            Log.d(TAG, "deleteArticle: deleting from storage..")
+            val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(articleUrl)
+            storageReference.delete()
+                .addOnSuccessListener {
+                    progressDialog.dismiss()
+                    Log.d(TAG, "deleteArticle: Deleted from storage")
+                    Log.d(TAG, "deleteArticle: Deleting from db now..")
+
+                    val ref = FirebaseDatabase.getInstance().getReference("Articles")
+                    ref.child(articleId)
+                        .removeValue()
+                        .addOnSuccessListener {
+                            progressDialog.dismiss()
+                            Log.d(TAG, "deleteArticle: Deleted from db successfully")
+                            Toast.makeText(context, "Deleted from db successfully!", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { e ->
+                            progressDialog.dismiss()
+                            Log.d(TAG,"deleteArticle: Failed to delete from db due to ${e.message}")
+                            Toast.makeText(
+                                context,
+                                "Failed to delete from db ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }
+                .addOnFailureListener { e ->
+                    progressDialog.dismiss()
+                    Log.d(TAG, "deleteArticle: Failed from storage to delete due to ${e.message}")
+                    Toast.makeText(
+                        context,
+                        "Failed to delete from storage ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
     }
 }
