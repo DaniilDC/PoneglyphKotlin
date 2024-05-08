@@ -162,5 +162,28 @@ class MyApplication : Application() {
                     ).show()
                 }
         }
+
+        fun incrementArticleViewCount(articleId: String) {
+            val ref = FirebaseDatabase.getInstance().getReference("Articles")
+            ref.child(articleId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var viewsCount = "${snapshot.child("viewsCount").value}"
+                        if (viewsCount == "" || viewsCount == "null") {
+                            viewsCount = "0";
+                        }
+                        val newViewsCount = viewsCount.toLong() + 1
+                        val hashMap = HashMap<String, Any>()
+                        hashMap["viewsCount"] = newViewsCount
+
+                        val dbRef = FirebaseDatabase.getInstance().getReference("Articles")
+                        dbRef.child(articleId)
+                            .updateChildren(hashMap)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
+        }
     }
 }

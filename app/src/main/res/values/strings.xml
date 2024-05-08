@@ -32,5 +32,6 @@
     <string name="new_article_title">New Article Title</string>
     <string name="edit_article_info">Edit Article Info</string>
     <string name="new_article_description">New Article Description</string>
+    <string name="article_details">Article Details</string>
 
 </resources>
