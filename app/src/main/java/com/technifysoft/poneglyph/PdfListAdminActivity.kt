@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.SearchView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -40,20 +41,31 @@ class PdfListAdminActivity : AppCompatActivity() {
 
         loadPdfList()
 
-        binding.searchEt.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //не требуется реализация
+//        binding.searchEt.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//                //не требуется реализация
+//            }
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                try {
+//                    adapterPdfAdmin.filter!!.filter(s)
+//                }
+//                catch (e: Exception) {
+//                    Log.d(TAG, "onTextChanged: ${e.message}")
+//                }
+//            }
+//            override fun afterTextChanged(s: Editable?) {
+//                //не требуется реализация
+//            }
+//        })
+
+        binding.searchEt.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterPdfAdmin.filter!!.filter(newText)
+                return true
             }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                try {
-                    adapterPdfAdmin.filter!!.filter(s)
-                }
-                catch (e: Exception) {
-                    Log.d(TAG, "onTextChanged: ${e.message}")
-                }
-            }
-            override fun afterTextChanged(s: Editable?) {
-                //не требуется реализация
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapterPdfAdmin.filter!!.filter(query)
+                return true
             }
         })
         binding.backBtn.setOnClickListener { onBackPressed() }

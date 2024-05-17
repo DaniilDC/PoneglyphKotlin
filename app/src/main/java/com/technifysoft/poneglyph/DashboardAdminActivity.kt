@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.widget.SearchView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -33,17 +35,28 @@ class DashboardAdminActivity : AppCompatActivity() {
         checkUser()
         loadCategories()
         
-        binding.searchEt.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                try {
-                    adapterCategory.filter.filter(s)
-                } catch (e: Exception) {
+//        binding.searchEt.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                try {
+//                    adapterCategory.filter.filter(s)
+//                } catch (e: Exception) {
+//
+//                }
+//            }
+//            override fun afterTextChanged(s: Editable?) {
+//            }
+//        })
 
-                }
+        binding.searchEt.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterCategory.filter.filter(newText)
+                return true
             }
-            override fun afterTextChanged(s: Editable?) {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapterCategory.filter.filter(query)
+                return true
             }
         })
 
@@ -87,7 +100,6 @@ class DashboardAdminActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
         })
     }

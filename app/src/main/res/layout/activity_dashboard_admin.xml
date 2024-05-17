@@ -60,7 +60,21 @@
 
     </RelativeLayout>
 
-<!--    <SearchView-->
+    <SearchView
+        android:id="@+id/searchEt"
+        android:layout_below="@id/toolbarRL"
+        android:iconifiedByDefault="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/search_view_border"
+        android:queryHint="@string/search"
+        android:textSize="16sp"
+        android:minHeight="48dp"/>
+
+<!--    <EditText-->
 <!--        android:id="@+id/searchEt"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
@@ -68,24 +82,13 @@
 <!--        android:layout_marginStart="10dp"-->
 <!--        android:layout_marginTop="10dp"-->
 <!--        android:layout_marginEnd="10dp"-->
-<!--        android:padding="2dp"-->
-<!--        android:background="@drawable/search_view_border"/>-->
-
-    <EditText
-        android:id="@+id/searchEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbarRL"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/search_view_border"
-        android:drawableStart="@drawable/ic_search_gray"
-        android:hint="@string/search"
-        android:textSize="16sp"
-        android:textColor="@color/gray1"
-        android:minHeight="48dp"
-        android:padding="10dp" />
+<!--        android:background="@drawable/search_view_border"-->
+<!--        android:drawableStart="@drawable/ic_search_gray"-->
+<!--        android:hint="@string/search"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textColor="@color/gray1"-->
+<!--        android:minHeight="48dp"-->
+<!--        android:padding="10dp" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoriesRv"
